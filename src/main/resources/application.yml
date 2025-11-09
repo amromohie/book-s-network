@@ -1,0 +1,18 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: book-s-network
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+  port: 8088
+  servlet:
+    context-path: /api/v1/
+springdoc:
+  default-consumes-media-type: application/json

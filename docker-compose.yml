@@ -1,0 +1,27 @@
+services:
+  db:
+    container_name: postgres_book_s_network_db
+    image: postgres
+    environment:
+      POSTGRES_USER: amrox
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - db:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - db
+    restart: unless-stopped
+  maildev:
+    image: maildev/maildev
+    container_name: maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+networks:
+  db:
+    driver: bridge
+
+volumes:
+  db:

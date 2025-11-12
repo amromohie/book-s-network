@@ -1,0 +1,33 @@
+package com.codex.booksnetwork.utils;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import java.util.Date;
+import javax.crypto.SecretKey;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class Jwt {
+
+  private final Claims claims;
+  private final SecretKey secretKey;
+
+
+  public boolean isExpired(String token) {
+    return claims.getExpiration().before(new Date());
+  }
+
+
+  public Long getUserId() {
+    return Long.valueOf(claims.getSubject());
+  }
+
+//  public Role getRole() {
+//    return Role.valueOf(claims.get("role", String.class));
+//  }
+
+  @Override
+  public String toString() {
+    return Jwts.builder().claims(claims).signWith(secretKey).compact();
+  }
+}

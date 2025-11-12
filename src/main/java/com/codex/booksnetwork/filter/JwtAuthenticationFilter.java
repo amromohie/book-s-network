@@ -1,5 +1,9 @@
 package com.codex.booksnetwork.filter;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
+import com.codex.booksnetwork.service.JwtService;
+import com.codex.booksnetwork.utils.Jwt;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +30,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   protected void doFilterInternal(
       HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
-    var authHeader = request.getHeader("Authorization");
+
+    if (request.getServletPath().contains("api/v1/auth")){
+      filterChain.doFilter(request, response);
+      return;
+    }
+
+    var authHeader = request.getHeader(AUTHORIZATION);
 
     if (authHeader == null || !authHeader.startsWith("Bearer ")) {
       filterChain.doFilter(request, response);

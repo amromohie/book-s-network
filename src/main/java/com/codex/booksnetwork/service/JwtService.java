@@ -58,8 +58,7 @@ public class JwtService {
     Claims claims =
         Jwts.claims()
             .subject(user.getId().toString())
-            .add("email", user.getEmail())
-            .add("name", user.getName())
+            .add("username", user.getUsername())
             .add("authorities", authorities)
             .issuedAt(new Date())
             .expiration(new Date(System.currentTimeMillis() + 1000 * tokenExpiration))
